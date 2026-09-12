@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Tracker personal de Genshin Impact">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg">
+<link rel="stylesheet" href="styles.css">
+<title>Teyvat Tracker</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">✦</div>
+      <div><strong>Teyvat Tracker</strong><span>Genshin Impact • Personal Dashboard</span></div>
+    </div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Configuración">⚙</button>
+  </header>
+
+  <main id="app">
+    <section class="hero">
+      <div class="hero-art"></div>
+      <div class="hero-content">
+        <div class="eyebrow">TU CUENTA</div>
+        <h1>Que tus deseos<br><em>lleguen a destino.</em></h1>
+        <p>Controla protogemas, pity, metas y recursos en un solo lugar.</p>
+        <div class="hero-actions">
+          <button class="primary" data-modal="resources">＋ Actualizar recursos</button>
+          <button class="ghost" data-nav="wishes">✦ Registrar deseo</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card featured">
+        <div class="stat-top"><span>💎 Protogemas</span><button class="mini" data-modal="resources">＋</button></div>
+        <div class="stat-value" id="primogems">12,480</div>
+        <div class="muted">≈ <b id="wishEquivalent">78</b> deseos</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>✦ Destinos</span></div>
+        <div class="stat-value small" id="fates">12</div>
+        <div class="muted">Intertwined Fates</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>✨ Encuentros</span></div>
+        <div class="stat-value small" id="acquaint">4</div>
+        <div class="muted">Acquaint Fate</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>🌙 Polvo estelar</span></div>
+        <div class="stat-value small" id="stardust">340</div>
+        <div class="muted">Disponible</div>
+      </article>
+    </section>
+
+    <section class="panel goal-panel">
+      <div class="panel-heading"><div><span class="eyebrow">META ACTIVA</span><h2 id="goalTitle">Ahorrar para el próximo personaje</h2></div><button class="text-btn" id="editGoal">Editar</button></div>
+      <div class="goal-row">
+        <div class="goal-ring" id="goalRing"><div><strong id="goalWish">78</strong><span>/ 180</span></div></div>
+        <div class="goal-copy">
+          <div class="progress-label"><span>Progreso</span><b id="goalPercent">43%</b></div>
+          <div class="progress"><i id="goalProgress"></i></div>
+          <div class="goal-meta"><span>Faltan <b id="goalRemaining">102</b> deseos</span><span><b id="dailyNeed">3.8</b> deseos/día</span></div>
+          <p class="muted" id="goalDate">Meta: 25 oct 2026</p><div class="daily-box"><div><span>💎 Necesitas por día</span><strong id="dailyPrimos">608</strong><small>protogemas / día</small></div><div><span>✦ Ritmo</span><strong id="dailyWishes">3.8</strong><small>deseos / día</small></div><div><span>⏳ Tiempo</span><strong id="daysLeft">27</strong><small>días restantes</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="two-col">
+      <article class="panel pity-card">
+        <div class="panel-heading"><div><span class="eyebrow">WISH TRACKER</span><h2>Pity</h2></div><button class="text-btn" data-nav="wishes">Ver todo</button></div>
+        <div class="banner-tabs">
+          <button class="tab active" data-banner="character">Personaje</button>
+          <button class="tab" data-banner="weapon">Arma</button>
+          <button class="tab" data-banner="standard">Permanente</button>
+        </div>
+        <div class="pity-main">
+          <div class="pity-number" id="pityNumber">64</div>
+          <div><span class="muted">pity actual</span><strong id="pityStatus">50/50 en juego</strong></div>
+        </div>
+        <div class="pity-track"><i id="pityTrack"></i><span>Soft pity</span><b>90</b></div>
+        <div class="pity-foot"><span>Último 5★: <b id="lastFive">Hace 64 deseos</b></span><span>★ 5</span></div>
+      </article>
+
+      <article class="panel quick-card">
+        <div class="panel-heading"><div><span class="eyebrow">HOY</span><h2>Tareas</h2></div><span class="badge" id="taskCount">2/4</span></div>
+        <label class="task"><input type="checkbox" checked><span><b>Comisiones</b><small>+60 protogemas</small></span></label>
+        <label class="task"><input type="checkbox" checked><span><b>Resina</b><small>160/160 disponible</small></span></label>
+        <label class="task"><input type="checkbox"><span><b>Abismo</b><small>Revisar reinicio</small></span></label>
+        <label class="task"><input type="checkbox"><span><b>Eventos</b><small>Recompensas pendientes</small></span></label>
+      </article>
+    </section>
+
+    <section class="panel chart-card">
+      <div class="panel-heading"><div><span class="eyebrow">HISTORIAL</span><h2>Progreso de protogemas</h2></div>
+        <select id="chartRange"><option>7 días</option><option>30 días</option><option>90 días</option></select>
+      </div>
+      <div class="chart">
+        <svg viewBox="0 0 700 190" preserveAspectRatio="none" aria-label="Gráfica de progreso">
+          <defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b8a0ff" stop-opacity=".35"/><stop offset="1" stop-color="#b8a0ff" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 160 C60 150 85 125 140 135 S220 92 270 105 S345 72 400 88 S480 40 525 64 S610 35 700 22 L700 190 L0 190Z" fill="url(#fill)"/>
+          <path d="M0 160 C60 150 85 125 140 135 S220 92 270 105 S345 72 400 88 S480 40 525 64 S610 35 700 22" fill="none" stroke="#c9bbff" stroke-width="4"/>
+        </svg>
+        <div class="chart-labels"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Hoy</span></div>
+      </div>
+    </section>
+
+    <section class="cards-row">
+      <article class="mini-panel"><span class="mini-icon">🌙</span><div><b>Tienda mensual</b><small>8/10 destinos comprados</small></div><strong>2</strong></article>
+      <article class="mini-panel"><span class="mini-icon">🔥</span><div><b>Racha diaria</b><small>Completaste 6 días</small></div><strong>6</strong></article>
+      <article class="mini-panel"><span class="mini-icon">🧭</span><div><b>Exploración</b><small>Fontaine • 72%</small></div><strong>72%</strong></article>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav active" data-nav="home"><span>⌂</span>Inicio</button>
+    <button class="nav" data-nav="wishes"><span>✦</span>Deseos</button>
+    <button class="nav" data-nav="goals"><span>🎯</span>Metas</button>
+    <button class="nav" data-nav="stats"><span>◒</span>Stats</button>
+    <button class="nav" data-nav="more"><span>☷</span>Más</button>
+  </nav>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

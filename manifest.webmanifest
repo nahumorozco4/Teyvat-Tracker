@@ -1,0 +1,11 @@
+{
+  "name":"Teyvat Tracker — Genshin Impact",
+  "short_name":"Teyvat Tracker",
+  "description":"Tracker personal de protogemas, pity, deseos y metas.",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#0b111d",
+  "theme_color":"#101827",
+  "orientation":"portrait-primary",
+  "icons":[{"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
